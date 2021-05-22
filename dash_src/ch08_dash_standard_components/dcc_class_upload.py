@@ -112,8 +112,8 @@ def update_dropdown(columns, rows):
     dff = pd.DataFrame(rows, columns=[c["name"] for c in columns])
     # 国名列にデータがあればドロップダウンの選択肢を作成し、初期値とともに返り値とする
     try:
-        options = [{"value": i, "label": i} for i in dff["国名"].unique()]
-        return options, [dff["国名"].unique()[0]]
+        options = [{"value": i, "label": i} for i in dff["rw27"].unique()]
+        return options, [dff["rw27"].unique()[0]]
     # 上記の処理ができない場合、コールバックを更新しない
     except:
         raise dash.exceptions.PreventUpdate
@@ -134,8 +134,8 @@ def update_graph(columns, rows, selected_countries):
         raise dash.exceptions.PreventUpdate
 
     dff["date"] = pd.to_datetime(dff["date"])
-    dff = dff[dff["国名"].isin(selected_countries)]
-    return dcc.Graph(figure=px.line(dff, x="date", y="value", color="国名"))
+    dff = dff[dff["rw27"].isin(selected_countries)]
+    return dcc.Graph(figure=px.scatter(dff, x="date", y="value", color="rw27",size="rw28",hover_name="rw29"))
 
 
 if __name__ == "__main__":
